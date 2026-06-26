@@ -1,0 +1,9 @@
+review,clean_review,tokens,filtered_tokens,lemmatized,sentiment_score,sentiment
+This laptop is amazing and very fast,this laptop is amazing and very fast,"['this', 'laptop', 'is', 'amazing', 'and', 'very', 'fast']","['laptop', 'amazing', 'fast']","['laptop', 'amazing', 'fast']",0.43000000000000005,Positive
+The battery life is terrible,the battery life is terrible,"['the', 'battery', 'life', 'is', 'terrible']","['battery', 'life', 'terrible']","['battery', 'life', 'terrible']",-1.0,Negative
+Excellent customer service and support,excellent customer service and support,"['excellent', 'customer', 'service', 'and', 'support']","['excellent', 'customer', 'service', 'support']","['excellent', 'customer', 'service', 'support']",1.0,Positive
+The app keeps crashing and is frustrating,the app keeps crashing and is frustrating,"['the', 'app', 'keeps', 'crashing', 'and', 'is', 'frustrating']","['app', 'keeps', 'crashing', 'frustrating']","['app', 'keep', 'crashing', 'frustrating']",-0.4,Negative
+I love using this product every day,i love using this product every day,"['i', 'love', 'using', 'this', 'product', 'every', 'day']","['love', 'using', 'product', 'every', 'day']","['love', 'using', 'product', 'every', 'day']",0.5,Positive
+Very poor experience and waste of money,very poor experience and waste of money,"['very', 'poor', 'experience', 'and', 'waste', 'of', 'money']","['poor', 'experience', 'waste', 'money']","['poor', 'experience', 'waste', 'money']",-0.36,Negative
+The interface is clean and easy to use,the interface is clean and easy to use,"['the', 'interface', 'is', 'clean', 'and', 'easy', 'to', 'use']","['interface', 'clean', 'easy', 'use']","['interface', 'clean', 'easy', 'use']",0.4,Positive
+The product quality is disappointing,the product quality is disappointing,"['the', 'product', 'quality', 'is', 'disappointing']","['product', 'quality', 'disappointing']","['product', 'quality', 'disappointing']",-0.6,Negative
