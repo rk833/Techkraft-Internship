@@ -1,0 +1,33 @@
+DOCUMENT: doc_rag.txt
+Word count: 106
+
+Chunk 1 (30 words):
+Retrieval-Augmented Generation, or RAG, is a technique that combines a language model with an external knowledge source. Instead of relying only on what the model learned during training, RAG retrieves
+
+Chunk 2 (30 words):
+what the model learned during training, RAG retrieves relevant documents at query time and feeds them into the model's context window. This helps reduce hallucination because the model can ground
+
+Chunk 3 (30 words):
+helps reduce hallucination because the model can ground its answer in real retrieved text rather than guessing from memory. A typical RAG pipeline has three stages: chunking documents, embedding the
+
+Chunk 4 (30 words):
+pipeline has three stages: chunking documents, embedding the chunks, and retrieving the most similar chunks for a given query. Chunk size matters a lot — chunks that are too large
+
+Chunk 5 (18 words):
+a lot — chunks that are too large dilute relevance, while chunks that are too small lose context.
+
+DOCUMENT: doc_embeddings.txt
+Word count: 96
+
+Chunk 1 (30 words):
+An embedding is a numeric vector representation of text that captures its meaning. Texts with similar meaning end up with vectors that are close together in that vector space, even
+
+Chunk 2 (30 words):
+are close together in that vector space, even if they don't share any exact words. This is what makes semantic search possible — instead of matching exact keywords, you can
+
+Chunk 3 (30 words):
+— instead of matching exact keywords, you can find text that means the same thing. Embedding models are trained on large amounts of text so that semantically similar sentences land
+
+Chunk 4 (30 words):
+of text so that semantically similar sentences land near each other geometrically. Cosine similarity is the most common way to measure how close two embedding vectors are to each other.
+
