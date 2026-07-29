@@ -146,6 +146,36 @@ def run_with_fallback(action, verbose: bool = True, **model_kwargs):
     raise last_error if last_error else ConfigError("no model candidates configured")
 
 
+async def arun_with_fallback(action, verbose: bool = True, **model_kwargs):
+    """
+    Async twin of run_with_fallback, where action is a coroutine function.
+
+    Needed because MCP tools and FastAPI handlers are async. Wrapping the sync
+    version in asyncio.run from inside a running event loop raises
+    "asyncio.run() cannot be called from a running event loop", so the await
+    has to happen here rather than being bridged.
+    """
+    last_error = None
+
+    for name, key, kwargs in _attempts(**model_kwargs):
+        for with_thinking in (True, False):
+            try:
+                return await action(
+                    build_model(name, key, with_thinking=with_thinking, **kwargs)
+                )
+            except Exception as error:
+                last_error = error
+                if is_bad_argument(error) and with_thinking and thinking_budget() is not None:
+                    continue
+                if is_quota_exhausted(error):
+                    if verbose:
+                        print(f"[{name} is out of quota, trying the next model]")
+                    break
+                raise
+
+    raise last_error if last_error else ConfigError("no model candidates configured")
+
+
 def stream_with_fallback(payload, verbose: bool = True, **model_kwargs):
     """
     Same idea as run_with_fallback, for streaming.

@@ -44,3 +44,10 @@ FlashRank==0.2.10
 # the tools call the Wikipedia and Open-Meteo APIs directly. the old wikipedia
 # PyPI package is deliberately NOT used, see 11-Agents/README.md
 requests>=2.32
+
+# module 14, MCP.
+# mcp MUST stay below 2.0. langchain-mcp-adapters 0.3.1 imports
+# mcp.shared.context.RequestContext, which mcp 2.0 removed, so the adapter
+# fails at import time against it. see 14-MCP/README.md
+langchain-mcp-adapters==0.3.1
+mcp==1.29.0

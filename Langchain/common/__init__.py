@@ -25,6 +25,7 @@ from .embeddings import (
 )
 from .models import (
     active_model_name,
+    arun_with_fallback,
     build_model,
     model_names,
     run_with_fallback,
@@ -35,6 +36,7 @@ __all__ = [
     "ConfigError",
     "describe_api_error",
     "active_model_name",
+    "arun_with_fallback",
     "build_model",
     "model_names",
     "run_with_fallback",
