@@ -179,13 +179,3 @@ fault.
 To provoke it, shrink `max_output_tokens` so the JSON gets truncated, and the
 parser will fail on incomplete input.
 
-## What to try next
-
-- Add a `runtime_minutes: int` field and run it on the sample review, which
-  never mentions a runtime. Watch whether the model invents one. This is the
-  fastest way to see why "never invent detail" is in the system message.
-- Change a `Field` description to something vague like `"the rating"` and
-  compare results.
-- Run `--mode json` and give the model a review in another language, then check
-  whether `sentiment` still comes back as one of the three allowed English
-  values. `JsonOutputParser` will not catch it if it does not.
