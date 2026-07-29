@@ -1,0 +1,19 @@
+.env
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# local vector stores and generated data (modules 07+)
+chroma_db/
+faiss_index/
+*.sqlite3
+
+# module 05 sample documents, regenerate with make_samples.py
+05-Document-Processing/sample.txt
+05-Document-Processing/sample.docx
+05-Document-Processing/sample.pdf
+
+# module 08 sample document, regenerate with make_sample.py
+08-Basic-RAG/handbook.pdf
