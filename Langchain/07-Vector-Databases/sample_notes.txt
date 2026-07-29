@@ -1,0 +1,47 @@
+# Notes file format
+# Each note starts with [category] followed by a title on the same line.
+# Everything until the next [category] line is the note body.
+# Lines starting with # are ignored.
+
+[work] Standup time changed
+The daily standup moves to 09:30 from Monday. The team lead asked everyone to
+post written updates first if they cannot attend in person.
+
+[work] Postgres connection pool
+The API kept dropping requests under load because the connection pool was set
+to ten. Raising it to fifty fixed it. Worth checking the pool size first
+whenever the service gets slow under traffic.
+
+[work] Code review checklist
+Look at error handling before style. Check that failures are logged with enough
+context to debug, and that nothing swallows an exception silently.
+
+[study] Cosine similarity
+Measures the angle between two vectors and ignores their magnitude. For text
+embeddings the direction carries the meaning, so this is preferred over
+euclidean distance.
+
+[study] Chunk overlap
+Repeating the end of one chunk at the start of the next stops a sentence being
+cut in half at a boundary. Ten to twenty percent of chunk size is a reasonable
+starting point.
+
+[personal] Dentist
+Appointment on the fourteenth at half past four. The surgery is the one behind
+the library, not the one on the high street.
+
+[personal] Bike service
+The rear brake has been rubbing since the wet weather. The shop said to bring
+it in on a weekday morning as they are quieter then.
+
+[personal] Bread recipe
+Long rise in the fridge overnight gives a much better crumb than rushing it at
+room temperature. Do not skip the resting time after shaping.
+
+[work] Deploy rollback
+The rollback script needs the previous image tag as an argument. It does not
+read it from anywhere, so write the tag down before deploying.
+
+[study] Token limits
+A model's context window is measured in tokens, not characters. Roughly four
+characters per token for English, but this varies by tokenizer.
