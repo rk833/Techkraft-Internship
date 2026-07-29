@@ -24,3 +24,23 @@ tiktoken==0.13.0
 langchain-chroma==1.1.0
 chromadb==1.5.9
 faiss-cpu==1.14.3
+
+# module 09, advanced retrievers.
+# langchain-classic ships with langchain and holds the retrievers that were in
+# langchain.retrievers before 1.x. lark is the query parser SelfQueryRetriever
+# needs. see 09-Advanced-RAG/README.md
+langchain-classic==1.0.8
+lark==1.3.1
+
+# module 10, retrieval optimisation.
+# flashrank runs a cross encoder on onnxruntime, which chromadb already pulls
+# in. sentence-transformers would do the same job but drags in torch.
+# the reranker model itself is downloaded on first use and cached.
+rank-bm25==0.2.2
+FlashRank==0.2.10
+
+# module 11, agents.
+# no agent framework extras are needed. requests is listed explicitly because
+# the tools call the Wikipedia and Open-Meteo APIs directly. the old wikipedia
+# PyPI package is deliberately NOT used, see 11-Agents/README.md
+requests>=2.32

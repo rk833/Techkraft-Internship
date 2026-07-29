@@ -17,3 +17,10 @@ faiss_index/
 
 # module 08 sample document, regenerate with make_sample.py
 08-Basic-RAG/handbook.pdf
+
+# module 09 sample documents, regenerate with make_samples.py
+09-Advanced-RAG/*.pdf
+
+# module 10, flashrank downloads and caches its model here
+10-Retrieval-Optimization/*.zip
+10-Retrieval-Optimization/ms-marco-*/
