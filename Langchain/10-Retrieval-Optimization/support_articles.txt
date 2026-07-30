@@ -1,0 +1,63 @@
+# Support knowledge base.
+# Each article starts with [id] followed by a title on the same line.
+# Lines starting with # are ignored.
+#
+# The articles are written so that keyword search and semantic search
+# disagree. Some contain rare exact tokens such as error codes, which BM25
+# handles well and embeddings handle badly. Others describe a problem in
+# everyday words that shares no vocabulary with how a user would report it.
+
+[kb-001] ERR_4021 certificate expired
+The gateway returns ERR_4021 when the TLS certificate for the upstream service
+has passed its expiry date. Renew the certificate, restart the gateway pods,
+then confirm the new expiry with the health endpoint. ERR_4021 is always a
+certificate problem and never a network problem.
+
+[kb-002] First request after idle takes a long time
+When a service has received no traffic for roughly fifteen minutes the platform
+scales it to zero. The next visitor waits while a container is created, the
+runtime boots and caches are populated. Users describe this as the page hanging
+or taking ages, though every later request is fast. Keeping one instance warm
+removes the delay.
+
+[kb-003] Connection pool exhaustion under load
+Requests queue and eventually time out when every database connection is in
+use. The default pool size of ten is too small for production traffic. Raise it,
+and check that no code path holds a connection open across a slow external call.
+
+[kb-004] Login loop after a password reset
+Users are returned to the sign in page immediately after authenticating. This
+happens when an old session cookie survives the reset. Clearing site data fixes
+it for the individual user, and rotating the session signing key fixes it for
+everyone.
+
+[kb-005] ERR_5150 payload too large
+The API rejects uploads above eight megabytes with ERR_5150. This limit is set
+at the load balancer, not in application code, so raising it in the service
+configuration has no effect. Large files should use the presigned upload flow
+instead.
+
+[kb-006] CSV export truncates long text fields
+Exported spreadsheets cut long descriptions at 255 characters. The limit comes
+from the legacy export template rather than the database. Use the JSON export
+for complete values until the template is replaced.
+
+[kb-007] Scheduled reports arrive an hour out
+Report timestamps drift by one hour twice a year. The scheduler stores times in
+local time rather than UTC, so daylight saving shifts them. Reports must be
+rescheduled after each clock change until the scheduler is fixed.
+
+[kb-008] Memory grows until the service is restarted
+Resident memory climbs steadily over several days and is only released by a
+restart. The cache holds references to completed requests and never evicts
+them, so nothing can be collected. A restart is a workaround, not a fix.
+
+[kb-009] Search returns nothing for terms that clearly exist
+The search index stops updating when the indexer crashes, so recently added
+records are missing while older ones are found normally. Check indexer health
+before assuming the query itself is wrong.
+
+[kb-010] Outbound email lands in the spam folder
+Messages are delivered but filed as junk. This is almost always missing or
+misconfigured SPF and DKIM records for the sending domain. Publish both, then
+warm the domain up gradually rather than sending a large batch immediately.
