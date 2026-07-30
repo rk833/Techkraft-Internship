@@ -51,3 +51,9 @@ requests>=2.32
 # fails at import time against it. see 14-MCP/README.md
 langchain-mcp-adapters==0.3.1
 mcp==1.29.0
+
+# module 15, the API.
+# note 15-Production-AI/requirements-api.txt is a much smaller list holding
+# only what the service itself imports. that is what the Dockerfile installs.
+fastapi==0.140.13
+uvicorn[standard]==0.52.0
