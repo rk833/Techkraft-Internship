@@ -7,6 +7,7 @@ See [guide.md](guide.md) for the roadmap and the goal of each module.
 
 ## Contents
 
+- [The modules](#the-modules) - the index, with a link to every module README
 - [Provider](#provider)
 - [Setup](#setup)
 - [Choosing a model](#choosing-a-model)
@@ -15,8 +16,14 @@ See [guide.md](guide.md) for the roadmap and the goal of each module.
 - [Thinking budget](#thinking-budget)
 - [Running a module](#running-a-module)
 - [Troubleshooting](#troubleshooting)
-- [Progress](#progress)
 - [Version notes](#version-notes)
+
+Two other documents sit alongside this one:
+
+| Document | What it is for |
+|----------|----------------|
+| [MODULES.md](MODULES.md) | Folder by folder detail: contents, how each works, why, and what came out of it |
+| [guide.md](guide.md) | The original roadmap and per-module plan, updated as things were built |
 
 ## Provider
 
@@ -174,7 +181,17 @@ models that reject it mostly do not reason by default anyway, so little is lost.
 Each module folder is self contained and has its own README with commands.
 Activate the shared environment first.
 
-```powershell
+```powershell## What to try next
+
+- Run `compare` on five questions where you know the right article, and count
+  how often each method puts it first. That is a tiny evaluation set, and it is
+  how the reranking finding above was reached.
+- Change `weights` to `[0.8, 0.2]` in `make_retriever` to favour BM25, and rerun
+  the RAM query.
+- Search for `ERR_5150` and check whether semantic search confuses it with
+  `ERR_4021`.
+- Add an article of your own with a rare product name, then query that name.
+  Watch BM25 nail it and semantic search struggle.
 .\venv\Scripts\Activate.ps1
 cd 01-Models
 python joke_generator.py "space travel"
@@ -198,25 +215,35 @@ python joke_generator.py "space travel"
 Scripts print a short explanation rather than a traceback. Add `--debug` to any
 module script to see the full traceback instead.
 
-## Progress
+## The modules
 
-| Module | Status |
-|--------|--------|
-| 01 Models | complete |
-| 02 Prompt Templates | complete |
-| 03 Output Parsers | complete |
-| 04 Chains | complete |
-| 05 Document Processing | complete |
-| 06 Embeddings | complete |
-| 07 Vector Databases | complete |
-| 08 Basic RAG | complete |
-| 09 Advanced RAG | complete |
-| 10 Retrieval Optimization | complete |
-| 11 Agents | complete |
-| 12 Memory | complete |
-| 13 LangGraph | not started |
-| 14 MCP | not started |
-| 15 Production AI | not started |
+All fifteen are complete. Every folder has its own README with commands,
+expected output, and a record of what went wrong while building it.
+
+For a longer account of what each folder contains, how it works, why it is built
+that way and what came out of it, see **[MODULES.md](MODULES.md)**.
+
+| Module | Topics | Cost per run | Notes |
+|--------|--------|--------------|-------|
+| [01 Models](01-Models/README.md) | chat models, temperature, max tokens, streaming, structured output | 1 call, 3 for `--mode temperature` | `list_models.py --probe` finds a model that actually works |
+| [02 Prompt Templates](02-Prompt-Templates/README.md) | PromptTemplate, ChatPromptTemplate, variables, few-shot | 1 call, `--show-prompt` is free | few-shot beat writing more rules |
+| [03 Output Parsers](03-Output-Parsers/README.md) | Str, Json and Pydantic parsers, generated format instructions | 1 call | the schema writes part of the prompt |
+| [04 Chains](04-Chains/README.md) | LCEL, RunnableSequence, RunnableLambda, `.assign` | 3 calls, `--show-graph --dry-run` is free | includes a hand written equivalent to compare |
+| [05 Document Processing](05-Document-Processing/README.md) | PDF, DOCX and TXT loaders, three splitters, metadata | **free, fully offline** | `chunk_size` is a target, not a guarantee |
+| [06 Embeddings](06-Embeddings/README.md) | embeddings, cosine similarity, semantic search, `task_type` | 1 call, batched | absolute similarity scores are nearly meaningless |
+| [07 Vector Databases](07-Vector-Databases/README.md) | Chroma, FAISS, metadata filtering, persistence | 1 call, `stats` is free | `similarity_search_with_score` returns a distance |
+| [08 Basic RAG](08-Basic-RAG/README.md) | retrievers, context assembly, grounding, citations | 2 calls, `show` costs 1 | grounding did not prevent hallucination |
+| [09 Advanced RAG](09-Advanced-RAG/README.md) | MultiQuery, ParentDocument, compression, SelfQuery | 1 to 4 calls, `compare` skips answering | the most expensive module |
+| [10 Retrieval Optimization](10-Retrieval-Optimization/README.md) | BM25, hybrid search, cross encoder reranking | 3 embed calls, keyword is free | reranking made results worse |
+| [11 Agents](11-Agents/README.md) | tool calling, StructuredTool, agent loops, ReAct | 1 call per loop turn, `tools` is free | no API keys beyond Gemini |
+| [12 Memory](12-Memory/README.md) | buffer, window and summary memory, chat history | 4 calls per demo, `threads` is free | summary memory was a net loss |
+| [13 LangGraph](13-LangGraph/README.md) | nodes, edges, state, conditional routing | 2 calls plus 2 per revision, `show` is free | one backwards edge is the whole point |
+| [14 MCP](14-MCP/README.md) | MCP servers and clients, tools, resources | 3 of 4 commands are free | `mcp` must stay below 2.0 |
+| [15 Production AI](15-Production-AI/README.md) | FastAPI, streaming, logging, auth, Docker | 14 tests are free, 3 are live | Dockerfile written but not built |
+
+Shared code lives in [`common/`](common/), which holds only boilerplate: error
+classification and the quota fallback chain. See
+[MODULES.md](MODULES.md#shared-code) for why the boundary is drawn there.
 
 ## Version notes
 
