@@ -1,0 +1,33 @@
+# Keep secrets, local state and everything unrelated out of the build context.
+# .env is the important line: without it the image would contain your API key.
+.env
+venv/
+__pycache__/
+*.py[cod]
+
+# generated stores and samples, rebuilt rather than shipped
+chroma_db/
+faiss_index/
+*.pdf
+*.docx
+ms-marco-*/
+*.zip
+
+# only module 15 goes into the image
+01-Models/
+02-Prompt-Templates/
+03-Output-Parsers/
+04-Chains/
+05-Document-Processing/
+06-Embeddings/
+07-Vector-Databases/
+08-Basic-RAG/
+09-Advanced-RAG/
+10-Retrieval-Optimization/
+11-Agents/
+12-Memory/
+13-LangGraph/
+14-MCP/
+
+.git/
+*.md
