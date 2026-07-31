@@ -1,0 +1,10 @@
+Data retention
+
+Raw event data is kept for 90 days. From 1 September 2026 this becomes 30 days.
+
+Aggregated metrics are kept for 2 years and are not affected by the change.
+
+Customer records are kept for 7 years after the account closes, which is a legal
+requirement and cannot be shortened by policy.
+
+Backups follow the same schedule as the data they contain.
