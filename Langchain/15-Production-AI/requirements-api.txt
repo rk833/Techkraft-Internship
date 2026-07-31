@@ -1,0 +1,16 @@
+# Only what the API actually imports.
+#
+# The repository's main requirements.txt carries everything the fifteen modules
+# need: chromadb, faiss, a reranker, PDF parsers, MCP. None of that is imported
+# by app.py or by common/, so shipping it would add hundreds of megabytes to the
+# image, lengthen every build, and widen the attack surface for no benefit.
+#
+# Working out the real dependency set is a step worth taking before any service
+# is containerised.
+
+fastapi==0.140.13
+uvicorn[standard]==0.52.0
+
+langchain-core==1.5.2
+langchain-google-genai==4.3.2
+python-dotenv==1.2.2
