@@ -23,7 +23,7 @@ Two other documents sit alongside this one:
 | Document | What it is for |
 |----------|----------------|
 | [MODULES.md](MODULES.md) | Folder by folder detail: contents, how each works, why, and what came out of it |
-| [guide.md](guide.md) | The original roadmap and per-module plan, updated as things were built |
+| [guide.md](guide.md) | The original roadmap and per-module plan. |
 
 ## Provider
 
