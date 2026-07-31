@@ -24,7 +24,6 @@ is the map; those are the detail.
 - [Module 14 - MCP](#module-14---mcp)
 - [Module 15 - Production AI](#module-15---production-ai)
 - [Lessons that run through the whole course](#lessons-that-run-through-the-whole-course)
-- [Where the original plan was wrong](#where-the-original-plan-was-wrong)
 
 ## How to read this
 
@@ -913,23 +912,3 @@ are guarded structurally rather than by blocklist.
 Several came from the code being wrong the first time.
 
 ---
-
-## Where the original plan was wrong
-
-The guide was drafted before any of this was built. Most of the corrections come
-from the ecosystem moving, not from the plan being careless.
-
-| Planned | Reality | Where |
-|---------|---------|-------|
-| `langchain.retrievers` | Moved to `langchain_classic` | 09 |
-| `langchain.memory`, `ConversationChain` | Gone from 1.x, deprecated in classic | 12 |
-| `AgentExecutor`, `create_react_agent` | Replaced by `create_agent` | 11 |
-| `wikipedia` package | Broken, Wikipedia now needs a User-Agent | 11 |
-| A weather API key | Not needed, Open-Meteo is free and keyless | 11 |
-| Cohere Rerank | Replaced with a local cross encoder, no account | 10 |
-| `sentence-transformers` | 2 GB of PyTorch, replaced by `flashrank` at 0.1 MB | 10 |
-| Latest `mcp` | Breaks the LangChain adapter, pinned below 2.0 | 14 |
-| `gemini-2.0-flash` | No free tier quota at all | 01 |
-| "Module 04 costs four calls" | Three model steps, so three calls | 04 |
-
-The guide has been updated to match, with each change noted where it applies.
