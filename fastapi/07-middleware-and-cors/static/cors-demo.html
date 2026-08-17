@@ -1,0 +1,98 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>CORS demo - module 07</title>
+<style>
+  body { font-family: system-ui, sans-serif; max-width: 52rem; margin: 2rem auto; padding: 0 1rem; }
+  button { padding: .5rem .9rem; margin: .2rem .3rem .2rem 0; cursor: pointer; }
+  pre { background: #f4f4f4; padding: .8rem; overflow-x: auto; white-space: pre-wrap; }
+  .note { color: #555; font-size: .9rem; }
+</style>
+
+<h1>CORS demo</h1>
+
+<p class="note">
+  Serve this file from a different origin than the API, then open it in a browser.
+  From the <code>07-middleware-and-cors</code> folder:
+</p>
+
+<pre>python -m http.server 5500 --directory static</pre>
+
+<p class="note">
+  Then open <code>http://127.0.0.1:5500/cors-demo.html</code> with the API running on port 8000.
+  <code>127.0.0.1:5500</code> is in <code>CORS_ALLOWED_ORIGINS</code> in the shared <code>.env</code>,
+  so requests are allowed. Open the same page via <code>localhost:5500</code> instead and the
+  requests are blocked - a different hostname is a different origin, even though it is the same
+  machine.
+</p>
+
+<p>
+  <button onclick="call('/health')">GET /health</button>
+  <button onclick="call('/products')">GET /products</button>
+  <button onclick="call('/products/999')">GET /products/999 (404)</button>
+  <button onclick="call('/products/boom')">GET /products/boom (500)</button>
+  <button onclick="post()">POST /products (preflight)</button>
+</p>
+
+<pre id="out">Results appear here.</pre>
+
+<script>
+  const API = "http://127.0.0.1:8000";
+  const out = document.getElementById("out");
+
+  function render(lines) {
+    out.textContent = lines.join("\n");
+  }
+
+  async function report(response) {
+    // These two are only readable because the server sends
+    // Access-Control-Expose-Headers. Remove expose_headers on the server and
+    // both of these become null while still being visible in devtools.
+    const requestId = response.headers.get("x-request-id");
+    const timing = response.headers.get("x-response-time-ms");
+    const body = await response.text();
+    render([
+      `status              ${response.status}`,
+      `x-request-id        ${requestId}`,
+      `x-response-time-ms  ${timing}`,
+      ``,
+      body.slice(0, 800),
+    ]);
+  }
+
+  async function call(path) {
+    render(["requesting " + path + " ..."]);
+    try {
+      const response = await fetch(API + path, {
+        headers: { "x-request-id": "browser-" + Date.now() },
+      });
+      await report(response);
+    } catch (err) {
+      render([
+        "fetch failed: " + err,
+        "",
+        "A network-level failure here usually means CORS, not a server error.",
+        "The browser will not show the response body or status when the",
+        "Access-Control-Allow-Origin header is missing.",
+      ]);
+    }
+  }
+
+  async function post() {
+    render(["POST /products - this triggers a preflight OPTIONS first ..."]);
+    try {
+      const response = await fetch(API + "/products", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          sku: "BR-" + Math.floor(Math.random() * 9000 + 1000),
+          name: "Created from the browser",
+          category: "audio",
+          price: 19.99,
+        }),
+      });
+      await report(response);
+    } catch (err) {
+      render(["fetch failed: " + err]);
+    }
+  }
+</script>
